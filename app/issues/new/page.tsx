@@ -10,6 +10,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { createIssueSchema } from '../../validationSchema';
 import {z} from 'zod'
 import ErrorMessage from '@/components/ErrorMessage';
+import Spinner from '@/components/Spinner';
 
 
 //infer types from my schema
@@ -20,10 +21,25 @@ type IssueForm =  z.infer<typeof createIssueSchema>;
 const NewIssuePage = () => {
 
     const [error, setError] = useState('')
+
+    const [isSubmitting, setIsSubmitting] = useState(false)
     const router=  useRouter()
 
-    const {register, control, handleSubmit, formState:{errors}} = useForm<IssueForm>({
+    const {register, control, handleSubmit, formState:{errors},} = useForm<IssueForm>({
         resolver:zodResolver(createIssueSchema)
+    })
+
+    const onSubmit =handleSubmit(  async (data) => {
+
+        try {
+            setIsSubmitting(true)
+            await axios.post('/api/issues', data);
+            router.push('/issues')
+        } catch (error) {
+            setIsSubmitting(false)
+            setError('An expected error occurred')
+        }
+
     })
   return (
 
@@ -34,16 +50,7 @@ const NewIssuePage = () => {
         {error}</Callout.Text></Callout.Root>}
 
 
-    <form className='space-y-3' onSubmit={handleSubmit(async (data) => {
-
-        try {
-            await axios.post('/api/issues', data);
-            router.push('/issues')
-        } catch (error) {
-            setError('An expected error occurred')
-        }
-
-    })}>
+    <form className='space-y-3' onSubmit={onSubmit}>
 <TextField.Root>
 
     <TextField.Input placeholder='Title' {...register('title')}/>
@@ -53,7 +60,7 @@ const NewIssuePage = () => {
 <Controller name='description' control={control} render={({field}) =><SimpleMDE placeholder='description ...' {...field}/> }/>
  <ErrorMessage>{errors.description?.message}</ErrorMessage>
 
-<Button> Submit new issue</Button>
+<Button disabled={isSubmitting}> Submit new issue {isSubmitting && <Spinner/> } </Button>
 
     </form>
 
