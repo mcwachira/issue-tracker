@@ -1,6 +1,5 @@
 "use client"
 import { Button, Callout, Text, TextArea, TextField } from '@radix-ui/themes'
-import SimpleMDE from "react-simplemde-editor";
 import { useForm, Controller } from 'react-hook-form';
 import "easymde/dist/easymde.min.css";
 import axios from 'axios';
@@ -11,11 +10,15 @@ import { createIssueSchema } from '../../validationSchema';
 import {z} from 'zod'
 import ErrorMessage from '@/components/ErrorMessage';
 import Spinner from '@/components/Spinner';
+import dynamic from 'next/dynamic';
 
-
+const SimpleMDE = dynamic(() => import ('react-simplemde-editor'), 
+{ssr:false})
 //infer types from my schema
 
 type IssueForm =  z.infer<typeof createIssueSchema>;
+
+
 
 
 const NewIssuePage = () => {
