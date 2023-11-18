@@ -6,18 +6,19 @@ import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { createIssueSchema } from '../../validationSchema';
+
 import {z} from 'zod'
 
 import dynamic from 'next/dynamic';
 import { ErrorMessage, Spinner } from '@/components';
 import { Issue } from '@prisma/client';
+import { IssueSchema } from '@/app/validationSchema';
 
 const SimpleMDE = dynamic(() => import ('react-simplemde-editor'), 
 {ssr:false})
 //infer types from my schema
 
-type IssueFormData =  z.infer<typeof createIssueSchema>;
+type IssueFormData =  z.infer<typeof IssueSchema>;
 
 
 
@@ -30,14 +31,20 @@ const IssueForm = ({issue}: {issue?:Issue}) => {
     const router=  useRouter()
 
     const {register, control, handleSubmit, formState:{errors},} = useForm<IssueFormData>({
-        resolver:zodResolver(createIssueSchema)
+        resolver:zodResolver(IssueSchema)
     })
 
     const onSubmit =handleSubmit(  async (data) => {
 
         try {
             setIsSubmitting(true)
-            await axios.post('/api/issues', data);
+            if(issue){
+                await axios.patch('/api/issues' + issue.id, data)
+            }else{
+
+                await axios.post('/api/issues', data);
+            }
+
             router.push('/issues')
         } catch (error) {
             setIsSubmitting(false)
@@ -64,7 +71,7 @@ const IssueForm = ({issue}: {issue?:Issue}) => {
 <Controller name='description' control={control}  defaultValue={issue?.description} render={({field}) =><SimpleMDE placeholder='description ...' {...field}/> }/>
  <ErrorMessage>{errors.description?.message}</ErrorMessage>
 
-<Button disabled={isSubmitting}> Submit new issue {isSubmitting && <Spinner/> } </Button>
+<Button disabled={isSubmitting}>{issue? "Update Issue": "Submit new issue"} {' '} {isSubmitting && <Spinner/> } </Button>
 
     </form>
 
