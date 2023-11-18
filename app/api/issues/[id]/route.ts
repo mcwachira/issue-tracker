@@ -34,3 +34,25 @@ const updatedIssue = await prisma.issue.update({
    
 return NextResponse.json(updatedIssue, {status:201})
 }
+
+export  async function Delete(request:NextRequest, {params}:{params:{id:string}}){
+
+    const issue = await prisma.issue.findUnique({
+        where:{
+
+            id:parseInt(params.id)
+        },
+    })
+
+    if(!issue){
+        return NextResponse.json({error:'Issue does not exist'}, {status:404})
+    }
+ await prisma.issue.delete({
+    where:{
+
+        id:parseInt(params.id)
+    }
+    })
+   
+return NextResponse.json({message:'issue deleted successfully'}, {status:201})
+}
