@@ -35,7 +35,7 @@ const updatedIssue = await prisma.issue.update({
 return NextResponse.json(updatedIssue, {status:201})
 }
 
-export  async function Delete(request:NextRequest, {params}:{params:{id:string}}){
+export  async function DELETE(request:NextRequest, {params}:{params:{id:string}}){
 
     const issue = await prisma.issue.findUnique({
         where:{
@@ -49,8 +49,7 @@ export  async function Delete(request:NextRequest, {params}:{params:{id:string}}
     }
  await prisma.issue.delete({
     where:{
-
-        id:parseInt(params.id)
+ id: issue.id ,
     }
     })
    
