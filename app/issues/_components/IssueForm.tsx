@@ -7,16 +7,15 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 
+
 import {z} from 'zod'
 
-import dynamic from 'next/dynamic';
+
 import { ErrorMessage, Spinner } from '@/components';
 import { Issue } from '@prisma/client';
 import { IssueSchema } from '@/app/validationSchema';
+import SimpleMDE from 'react-simplemde-editor';
 
-const SimpleMDE = dynamic(() => import ('react-simplemde-editor'), 
-{ssr:false})
-//infer types from my schema
 
 type IssueFormData =  z.infer<typeof IssueSchema>;
 
