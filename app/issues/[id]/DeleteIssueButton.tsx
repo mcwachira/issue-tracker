@@ -1,4 +1,5 @@
 'use client'
+import { Spinner } from '@/components'
 import { TrashIcon } from '@radix-ui/react-icons'
 import { AlertDialog, Button, Flex } from '@radix-ui/themes'
 import axios from 'axios'
@@ -12,10 +13,13 @@ const DeleteIssueButton = ({issueId}: {issueId:number}) => {
 
     const [error, setError] = useState(false)
 
+    const [isDeleting, setIsDeleting] = useState(false)
+
 
     const handleDelete = async() => {
 
         try {
+            setIsDeleting(true)
 
             await axios.delete('/api/issues/' + issueId)
             throw new Error()
@@ -24,6 +28,7 @@ const DeleteIssueButton = ({issueId}: {issueId:number}) => {
             
         } catch (error) {
             
+            setIsDeleting(false)
             setError(true)
         }
 
@@ -36,7 +41,8 @@ const DeleteIssueButton = ({issueId}: {issueId:number}) => {
 
     <AlertDialog.Root>
         <AlertDialog.Trigger>
-        <Button color='red'>
+        <Button color='red' disabled={isDeleting}>
+            {isDeleting &&<Spinner/>}
     <TrashIcon />
     Delete Issue
 </Button>
@@ -63,14 +69,22 @@ const DeleteIssueButton = ({issueId}: {issueId:number}) => {
         </AlertDialog.Content>
     </AlertDialog.Root>
 
-
-<AlertDialog.Root open={error}>
-    <AlertDialog.Content>
-        <AlertDialog.Title>Error</AlertDialog.Title>
-        <AlertDialog.Description>This issue could not be deleted</AlertDialog.Description>
-        <Button color='gray' variant='soft' mt='2' onClick={() => setError(false)}>Ok</Button>
-    </AlertDialog.Content>
-</AlertDialog.Root>
+    <AlertDialog.Root open={error}>
+        <AlertDialog.Content>
+          <AlertDialog.Title>Error</AlertDialog.Title>
+          <AlertDialog.Description>
+            This issue could not be deleted.
+          </AlertDialog.Description>
+          <Button
+            color="gray"
+            variant="soft"
+            mt="2"
+            onClick={() => setError(false)}
+          >
+            OK
+          </Button>
+        </AlertDialog.Content>
+      </AlertDialog.Root>
 
 
     </>

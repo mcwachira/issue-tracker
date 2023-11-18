@@ -36,6 +36,7 @@ return NextResponse.json(updatedIssue, {status:201})
 }
 
 export  async function DELETE(request:NextRequest, {params}:{params:{id:string}}){
+    
 
     const issue = await prisma.issue.findUnique({
         where:{
