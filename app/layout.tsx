@@ -1,10 +1,11 @@
-import Navbar from '@/components/Navbar'
+
 import './theme.config.css'
 import '@radix-ui/themes/styles.css';
 import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { Theme, ThemePanel } from '@radix-ui/themes';
+import { Footer, Navbar } from '@/components';
 
 const inter = Inter({ subsets: ['latin'] ,
 variable:'--font-inter'})
@@ -31,6 +32,7 @@ export default function RootLayout({
 <main className='p-5'>
 {children}
 </main>
+<Footer/>
 {/* <ThemePanel/> */}
 </Theme>
       </body>
