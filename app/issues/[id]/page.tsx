@@ -38,4 +38,6 @@ const IssueDetailPage = async ({params}:Props) => {
   )
 }
 
+//export const revalidate = 10
+
 export default IssueDetailPage
