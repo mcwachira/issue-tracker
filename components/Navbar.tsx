@@ -7,7 +7,7 @@ import {AiFillBug} from 'react-icons/ai'
 import clsx from 'clsx'
 import {useSession} from 'next-auth/react'
 import { Avatar, Box, Container, DropdownMenu, Flex, Text } from '@radix-ui/themes'
-import {Skeleton} from '@/components/Skeleton'
+import Skeleton from '@/components/Skeleton'
 const Navbar = () => {
 
   const currentPath = usePathname()
