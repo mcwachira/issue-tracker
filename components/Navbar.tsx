@@ -7,12 +7,14 @@ import {AiFillBug} from 'react-icons/ai'
 import clsx from 'clsx'
 import {useSession} from 'next-auth/react'
 import { Avatar, Box, Container, DropdownMenu, Flex, Text } from '@radix-ui/themes'
-
+import {Skeleton} from '@/components/Skeleton'
 const Navbar = () => {
 
   const currentPath = usePathname()
 
   const {status, data:session} = useSession();
+
+  if(status === 'loading') return <Skeleton width='3rem'/>
 
     const links =[
         {label:"Dashboard", href:"/"},
@@ -46,7 +48,8 @@ const Navbar = () => {
     fallback='?'
     size='2'
     radius='full'
-    className='cursor-pointer'/>
+    className='cursor-pointer'
+    referre rPolicy='no-reffer'/>
   </DropdownMenu.Trigger>
   <DropdownMenu.Content>
     <DropdownMenu.Label>
