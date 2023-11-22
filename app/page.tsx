@@ -1,11 +1,10 @@
+import Pagination from '@/components/Pagination'
 import React from 'react'
 
 const Home = () => {
   return (
     <div>
-      <h1>
-        Hello Issues
-      </h1>
+    <Pagination itemCount={100} pageSize={10} currentPage={2}/>
     </div>
   )
 }
