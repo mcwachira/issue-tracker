@@ -7,7 +7,13 @@ import React, { useEffect, useState } from 'react'
 import Skeleton from '@/components/Skeleton'
 
 const AssigneeSelect = () => {
-  const { data: users, error, isLoading } = useUsers();
+  const { data: users, error, isLoading } =  useQuery<User[]>({
+    queryKey: ["users"],
+    queryFn: () =>
+      axios.get("/api/users").then((res) => res.data),
+    staleTime: 60 * 1000, //60s
+    retry: 3,
+  });
 
   if (isLoading) return <Skeleton/>;
 
@@ -26,14 +32,14 @@ const AssigneeSelect = () => {
 }
 
 
-const useUsers = () =>
-  useQuery<User[]>({
-    queryKey: ["users"],
-    queryFn: () =>
-      axios.get("/api/users").then((res) => res.data),
-    staleTime: 60 * 1000, //60s
-    retry: 3,
-  });
+// const useUsers = () =>
+//   useQuery<User[]>({
+//     queryKey: ["users"],
+//     queryFn: () =>
+//       axios.get("/api/users").then((res) => res.data),
+//     staleTime: 60 * 1000, //60s
+//     retry: 3,
+//   });
 
 
 
