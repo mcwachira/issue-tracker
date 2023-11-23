@@ -1,3 +1,4 @@
+import IssueChart from '@/components/IssueChart'
 import IssueSummary from '@/components/IssueSummary'
 import LatestIssues from '@/components/LatestIssues'
 import Pagination from '@/components/Pagination'
@@ -12,7 +13,7 @@ const Home = async() => {
   return (
     <div >
       {/* <LatestIssues/> */}
-      <IssueSummary open={open} inProgress={inProgress} closed={closed}/>
+      <IssueChart open={open} inProgress={inProgress} closed={closed}/>
     {/* <Pagination itemCount={100} pageSize={10} currentPage={parseInt(searchParams.page)}/> */}
     </div>
   )
