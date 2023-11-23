@@ -29,7 +29,7 @@ onValueChange={(status) =>{
 
 const query = params.size ? "?" + params.toString() : ""
 
-router.push('/issues/list' + query)
+router.push('/issues/lists' + query)
 }
 }>
 <Select.Trigger placeholder='Filter By Status'/>

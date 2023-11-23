@@ -19,7 +19,7 @@ const LatestIssues = async() => {
     
     return (
         <Card>
-            <Heading size='4' mb='4'>
+            <Heading size='4' mb='5'>
 
 Latest News
             </Heading>
@@ -27,7 +27,7 @@ Latest News
     <Table.Body>
 
 {issues.map((issue) => <Table.Row key={issue.id}><Table.Cell>
-    <Flex justiyf='between'>
+    <Flex justify='between'>
 
     <Flex direction='column' align='start' gap='3'>
 
