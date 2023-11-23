@@ -1,5 +1,5 @@
 import { Status } from '@prisma/client';
-import { Flex, Text } from '@radix-ui/themes';
+import { Card, Flex, Text } from '@radix-ui/themes';
 import Link from 'next/link';
 import React from 'react'
 
@@ -30,23 +30,23 @@ status:Status}[] = [
             status:'CLOSED'
         },
     ]
-  return (
-<Flex gap='4'>
-    {containers.map((container) => (
-        <Flex direction='column' gap='2' key={container.label}>
-            <Link className='text-sm' href={`/issues/lists?status=${container.status}`}>
-                {container.label}
-            </Link>
-            <Text size='5' className='font-bold'>
-                {container.value}
-            </Text>
+    return (
+        <Flex gap="4">
+          {containers.map((container) => (
+            <Card key={container.label}>
+              <Flex direction="column" gap="1">
+                <Link
+                  className='text-sm font-medium'
+                  href={`/issues/list?status=${container.status}`}
+                >
+                  {container.label}
+                </Link>
+                <Text size="5" className='font-bold'>{container.value}</Text>
+              </Flex>
+            </Card>
+          ))}
         </Flex>
-    ))}
-
-
-
-</Flex>
-  )
-}
-
-export default IssueSummary
+      );
+    };
+    
+    export default IssueSummary;
