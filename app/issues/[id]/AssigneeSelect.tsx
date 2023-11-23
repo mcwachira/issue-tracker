@@ -1,4 +1,4 @@
-"use  client"
+"use client"
 import { Issue, User } from '@prisma/client'
 import { Select } from '@radix-ui/themes'
 import { useQuery } from '@tanstack/react-query'
@@ -8,9 +8,9 @@ import Skeleton from '@/components/Skeleton'
 import toast, { Toaster } from 'react-hot-toast';
 
 const AssigneeSelect = ({issue} : {issue:Issue}) => {
-  const { data: users, error, isLoading } =  useUsers()
+  const { data: users, error, isLoading } = useUsers();
 
-  if (isLoading) return <Skeleton/>;
+  if (isLoading) return <Skeleton />;
 
   if (error) return null;
 
