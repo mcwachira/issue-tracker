@@ -4,6 +4,7 @@ import LatestIssues from '@/components/LatestIssues'
 import Pagination from '@/components/Pagination'
 import prisma from '@/prisma/client'
 import { Flex, Grid } from '@radix-ui/themes'
+import { Metadata } from 'next'
 import React from 'react'
 
 const Home = async() => {
@@ -29,3 +30,8 @@ const Home = async() => {
 }
 
 export default Home
+
+export const metadata:Metadata = {
+  title:'Issue Tracker - Dashboard',
+  description:'View a summary of project issues'
+}
